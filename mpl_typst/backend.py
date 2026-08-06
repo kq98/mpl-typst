@@ -507,9 +507,16 @@ class TypstRenderer(RendererBase):
                 quad = vertices[i:i + 2, j:j + 2]
                 quad = quad.reshape(4, 2)
                 quad = quad[[2, 3, 1, 0]]
-                line = Call('path', fill=fill, stroke=stroke, closed=True)
+                closed = Call('curve.close')
+                line = Call('curve',closed, fill=fill, stroke=stroke)
+                firstPoint = True
                 for coords in quad:
-                    point = Array(coords)
+                    if firstPoint:
+                        firstPoint = False
+                        point = Call('curve.move',Array(coords))
+                    else:
+                        point = Call('curve.line',Array(coords))
+
                     line.args.append(point)
 
                 # Put on canvas with respect of the origin.
