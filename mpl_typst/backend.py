@@ -484,8 +484,9 @@ class TypstRenderer(RendererBase):
         for i in range(vertices.shape[0] - 1):
             # TODO(@daskol): What about shapes coordinates, facecolors, and
             # edgecolors?
-            facecolor = [Scalar(c * 100, '%') for c in facecolors[i]]
             for j in range(vertices.shape[1] - 1):
+                facecolor = [Scalar(c * 100, '%') for c in facecolors[(vertices.shape[1]-1)*i + j]]
+
                 # Create filling color.
                 fill = Call('rgb', *facecolor)
 
