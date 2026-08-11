@@ -507,8 +507,7 @@ class TypstRenderer(RendererBase):
                 quad = vertices[i:i + 2, j:j + 2]
                 quad = quad.reshape(4, 2)
                 quad = quad[[2, 3, 1, 0]]
-                closed = Call('curve.close')
-                line = Call('curve',closed, fill=fill, stroke=stroke)
+                line = Call('curve', fill=fill, stroke=stroke)
                 firstPoint = True
                 for coords in quad:
                     if firstPoint:
@@ -518,6 +517,7 @@ class TypstRenderer(RendererBase):
                         point = Call('curve.line',Array(coords))
 
                     line.args.append(point)
+                line.args.append(Call('curve.close'))
 
                 # Put on canvas with respect of the origin.
                 place = Call('place', 'top + left', line,
