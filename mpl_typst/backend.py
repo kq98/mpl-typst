@@ -485,20 +485,24 @@ class TypstRenderer(RendererBase):
             # TODO(@daskol): What about shapes coordinates, facecolors, and
             # edgecolors?
             for j in range(vertices.shape[1] - 1):
-                facecolor = [Scalar(c * 100, '%') for c in facecolors[(vertices.shape[1]-1)*i + j]]
+                facecolor = [Scalar(c * 100, '%') for c in
+                    facecolors[(vertices.shape[1] - 1) * i + j]]
 
                 # Create filling color.
                 fill = Call('rgb', *facecolor)
 
                 # Create stroke if edgecolors is given.
-                edgecolor = [0,0,0,0]
+                edgecolor = [0, 0, 0, 0]
                 if edgecolors.size > 0:
                     if edgecolors.shape == facecolors.shape:
-                        edgecolor = [Scalar(c * 100, '%') for c in edgecolors[(vertices.shape[1]-1)*i + j]]
+                        edgecolor = [Scalar(c * 100, '%') for c in
+                            edgecolors[(vertices.shape[1] - 1) * i + j]]
                     else:
                         num_colors = edgecolors.shape[0]
-                        color_index = ((vertices.shape[1]-1)*i + j) % num_colors
-                        edgecolor = [Scalar(c * 100, '%') for c in edgecolors[color_index]]
+                        color_index = \
+                            ((vertices.shape[1] - 1) * i + j) % num_colors
+                        edgecolor = [Scalar(c * 100, '%') for c in
+                            edgecolors[color_index]]
 
                 stroke = None
                 if (lw := gc.get_linewidth()) > 0:
@@ -517,9 +521,9 @@ class TypstRenderer(RendererBase):
                 for coords in quad:
                     if firstPoint:
                         firstPoint = False
-                        point = Call('curve.move',Array(coords))
+                        point = Call('curve.move', Array(coords))
                     else:
-                        point = Call('curve.line',Array(coords))
+                        point = Call('curve.line', Array(coords))
 
                     line.args.append(point)
                 line.args.append(Call('curve.close'))

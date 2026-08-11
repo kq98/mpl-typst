@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 import numpy as np
+from matplotlib.figure import Figure
 
 from mpl_typst.testing import IssueRegression, flaky
 
@@ -14,8 +14,8 @@ class TestPColorMesh(IssueRegression):
         X, Y = np.meshgrid(x, y)
         Z = np.sin(X**2 + Y**2)
 
-        fig, ax = plt.subplots(figsize=(13.89 , 13.89))
-        mesh = ax.pcolormesh(X, Y, Z, shading="auto", cmap="viridis")
+        fig, ax = plt.subplots(figsize=(13.89, 13.89))
+        ax.pcolormesh(X, Y, Z, shading='auto', cmap='viridis')
         ax.axis('off')
 
         return fig
