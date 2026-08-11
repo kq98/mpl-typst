@@ -490,11 +490,16 @@ class TypstRenderer(RendererBase):
                 # Create filling color.
                 fill = Call('rgb', *facecolor)
 
-                # Create stroke if line width is given.
+                # Create stroke if edgecolors is given.
+                edgecolor = [0,0,0,0]
                 if edgecolors.size > 0:
-                    edgecolor = [Scalar(c * 100, '%') for c in edgecolors[i]]
-                else:
-                    edgecolor = facecolor
+                    if edgecolors.shape == facecolors.shape:
+                        edgecolor = [Scalar(c * 100, '%') for c in edgecolors[(vertices.shape[1]-1)*i + j]]
+                    else:
+                        num_colors = edgecolors.shape[0]
+                        color_index = ((vertices.shape[1]-1)*i + j) % num_colors
+                        edgecolor = [Scalar(c * 100, '%') for c in edgecolors[color_index]]
+
                 stroke = None
                 if (lw := gc.get_linewidth()) > 0:
                     paint = Call('rgb', *edgecolor)
